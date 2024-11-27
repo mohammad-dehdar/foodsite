@@ -36,7 +36,7 @@ export async function getStaticProps(context) {
     const { params: { id } } = context;
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data/${id.toString()}`);
         if (!res.ok) {
             return {
                 notFound: true, // Handles 404 and other response errors
@@ -52,7 +52,7 @@ export async function getStaticProps(context) {
 
         return {
             props: { data },
-            revalidate: 10,
+            revalidate: +process.env.REVALIDATE,
         };
     } catch (error) {
         console.error("Error fetching data:", error);
