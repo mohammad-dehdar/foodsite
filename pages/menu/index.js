@@ -11,11 +11,11 @@ function Menu({data}) {
 export default Menu
 
 export async function getStaticProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data`)
+    const res = await fetch("https://foodrecipe-woad.vercel.app/data")
     const data = await res.json()
 
     return {
         props : {data},
-        revalidate : +process.env.REVALIDATE,
+        revalidate : 3600,
     }
 }

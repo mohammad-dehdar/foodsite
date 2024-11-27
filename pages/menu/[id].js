@@ -19,7 +19,7 @@ function FoodDetails({ data }) {
 export default FoodDetails
 
 export async function getStaticPaths() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data`)
+    const res = await fetch("https://foodrecipe-woad.vercel.app/data")
     const json = await res.json()
     const data = json.slice(0, 10)
     const paths = data.map((food) => ({
@@ -36,7 +36,7 @@ export async function getStaticProps(context) {
     const { params: { id } } = context;
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data/${id.toString()}`);
+        const res = await fetch(`https://foodrecipe-woad.vercel.app/data/${id.toString()}`);
         if (!res.ok) {
             return {
                 notFound: true, // Handles 404 and other response errors
@@ -52,7 +52,7 @@ export async function getStaticProps(context) {
 
         return {
             props: { data },
-            revalidate: +process.env.REVALIDATE,
+            revalidate: 3600,
         };
     } catch (error) {
         console.error("Error fetching data:", error);
